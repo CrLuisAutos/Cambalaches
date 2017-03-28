@@ -1,16 +1,10 @@
 jQuery(document).ready(function($) {
     $("#signIn").submit(function(event) {
-        if (($("#form-username").val()) == "" || ($("#form-password").val()) == "") {
-            $("#danger").css({
-                'visibility': 'visible',
-            });
+        if ($.trim(($("#form-username").val())) == "" || ($.trim($("#form-password").val())) == "") {
+            $("#error").text(gouigo);
             return false;
-        }
-        else{
-        	$("#danger").css({
-                'visibility': 'hidden',
-            });
-        	return true;
+        } else {
+            return true;
         }
     });
 });

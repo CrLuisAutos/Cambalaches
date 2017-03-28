@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="<?= base_url(); ?>util/css/form-elements.css">
     </head>
     <body>
+        <?php
+               $error= $this->session->flashdata('error');
+        ?>
         <!-- Top content -->
         <div class="top-content">
             <div class="inner-bg">
@@ -44,7 +47,14 @@
                                     <div class="form-group">
                                         <label class="sr-only" for="form-password">Contraseña</label>
                                         <input type="password" name="pass" placeholder="Contraseña" class="form-password form-control" id="form-password">
-                                        <span class="label label-danger" id="danger">Datos Incorrectos!</span>
+                                        <label class="label" id="error">
+                                            <?php 
+                                                if($error){
+                                                    echo $error;
+                                                }
+                                             ?>
+                                        </label>
+                                    
                                     </div>
                                     <button type="submit" class="btn">Ingresar</button>
                                 </form>

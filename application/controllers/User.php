@@ -7,7 +7,7 @@ class User extends CI_Controller {
 	public function index()
 	{
 		
-		$this->load->view('user/index');
+		$this->load->view('user/index.php');
 		
 	}
 
@@ -27,10 +27,10 @@ class User extends CI_Controller {
 
 		if(sizeof($r) > 0) {
 			$this->session->set_userdata('user', $r[0]);
-			redirect('index');
+			redirect('user');
 		} else {
-			$this->session->set_flashdata('error', 'Password invalid');
-			redirect('../');
+			$this->session->set_flashdata('error', 'Datos Incorrectos');
+			redirect(base_url(), 'refresh');
 		}
 
 	}
