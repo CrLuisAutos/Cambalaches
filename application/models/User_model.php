@@ -1,12 +1,18 @@
 <?php
 class User_model extends CI_Model {
 
-  function authenticate($user, $pass) {
+  function autenticar($email, $pass) {
 
     $query = $this->db->get_where('users',
-      array('username' => $user, 'password' => $pass));
+      array('email' => $email, 'password' => $pass));
 
 	  return $query->result_object();
+  }
+
+  public function crearUsuario($user)
+  {
+  	 $r = $this->db->insert('users', $user);
+    return $r;
   }
 
 }

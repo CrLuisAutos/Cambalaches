@@ -1,88 +1,91 @@
+<?php 
+  if (isset($_SESSION['user'])){ 
+   redirect('usuario');
+} 
+ ?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cambalaches</title>
-        <!-- Bootstrap -->
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        <!-- Latest compiled and minified JavaScript -->
-        <!-- CSS -->
-        <link rel="stylesheet" href="<?= base_url(); ?>util/css/style.css">
-        <link rel="stylesheet" href="<?= base_url(); ?>util/css/form-elements.css">
-    </head>
-    <body>
-        <?php
-               $error= $this->session->flashdata('error');
-        ?>
-        <!-- Top content -->
-        <div class="top-content">
-            <div class="inner-bg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><em>Cambalaches</em></h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 form-box">
-                            <div class="form-top">
-                                <div class="form-top-left">
-                                    <h3>Para ingresar a nuestro sitio</h3>
-                                    <p>Digite su usuario y contraseña</p>
-                                </div>
-                                <div class="form-top-right">
-                                    <i class="fa fa-key"></i>
-                                </div>
-                            </div>
-                            <div class="form-bottom">
-                                <form role="form" action="user/authenticate" method="post" class="login-form" id="signIn">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-username">Usuario</label>
-                                        <input type="text" name="userName" placeholder="Usuario" class="form-username form-control" id="form-username" autofocus="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-password">Contraseña</label>
-                                        <input type="password" name="pass" placeholder="Contraseña" class="form-password form-control" id="form-password">
-                                        <label class="label" id="error">
-                                            <?php 
-                                                if($error){
-                                                    echo $error;
-                                                }
-                                             ?>
-                                        </label>
-                                    
-                                    </div>
-                                    <button type="submit" class="btn">Ingresar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 social-login">
-                            <h3>...o Registrese con:</h3>
-                            <div class="social-login-buttons">
-                                <a class="btn btn-link-1 btn-link-1-facebook" href="#">
-                                    <i class="fa fa-facebook"></i> Facebook
-                                </a>
-                                <a class="btn btn-link-1 btn-link-1-google-plus" href="#">
-                                    <i class="fa fa-google-plus"></i> Google Plus
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Cambalaches</title>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="<?php base_url();?>util/css/login/style.css">
+    
+  </head>
+  <body>
+    <div class="form">
+      <h1>Cambalaches CR.</h1>
+      <p class="forgot"><a><?php echo $this->session->flashdata('msj');?></a></p>
+      <ul class="tab-group">
+        <li class="tab"><a href="#signup">Registro</a></li>
+        <li class="tab active"><a href="#login">Inicio de Sesión</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="signup">
+          
+          <form action="user/crearUsuario" method="post">
+            
+            <div class="top-row">
+              <div class="field-wrap">
+                <label>
+                  Nombre<span class="req">*</span>
+                </label>
+                <input type="text" required autocomplete="off" name="nombre" />
+              </div>
+              
+              <div class="field-wrap">
+                <label>
+                  Apellido<span class="req">*</span>
+                </label>
+                <input type="text"required autocomplete="off" name="apellido" />
+              </div>
+            </div>
+            <div class="field-wrap">
+              <label>
+                Correo Electrónico<span class="req">*</span>
+              </label>
+              <input type="email"required autocomplete="off" name="email" />
             </div>
             
+            <div class="field-wrap">
+              <label>
+                Contraseña<span class="req">*</span>
+              </label>
+              <input type="password"required autocomplete="off" name="pass" />
+            </div>
+            <button type="submit" class="button button-block"/>Iniciar</button>
+            
+          </form>
         </div>
-        <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="<?=base_url(); ?>util/js/login/file.js" ></script>
-    </body>
-</html>
+        
+        <div id="login">
+          <h1>Bienvenido!</h1>
+          
+          <form action="user/autenticar" method="post">
+            
+            <div class="field-wrap">
+              <label>
+                Correo Electrónico<span class="req">*</span>
+              </label>
+              <input type="email"required autocomplete="off" name="email" />
+            </div>
+            <div class="field-wrap">
+              <label>
+                Contraseña<span class="req">*</span>
+              </label>
+              <input type="password"required autocomplete="off" name="pass" />
+            </div>
+            <button class="button button-block"/>Iniciar Sesión</button>
+            
+          </form>
+        </div>
+        
+        </div><!-- tab-content -->
+        
+        </div> <!-- /form -->
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script src="<?php base_url();?> util/js/login/index.js"></script>
+      </body>
+    </html>
