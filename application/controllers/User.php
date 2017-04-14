@@ -56,18 +56,29 @@ class User extends CI_Controller {
 
 		 	$this->mostrar_msj('**No se permiten caracteres especiales**');
 		 }
-		 else{
+		}
 		  $usuario['email']= $email; 
-		 	
+			$r=$this->User_model->validarCorreo($email);
+			if (sizeof($r)>0) {
+				$this->mostrar_msj('**Existe un usuario utilizando este correo**');
+			}
+			else{
+
 		 	$r=$this->User_model->crearUsuario($usuario);
 		 	if(sizeof($r)>0){
 		 		redirect(base_url());
+		 		}
+		 	else{
+		 		$this->mostrar_msj('**Ocurrio un error**');
 		 	}
-		 }
-		}
-		 
-
+			}
 		
+	}
+	//elimina la sesion del usuario
+	public function closeSesion()
+	{
+		$this->session->sess_destroy('user');
+		redirect(base_url());
 	}
 //redirecciona si hubo algun error por parte del usuario
 	public function mostrar_msj($mensaje)
