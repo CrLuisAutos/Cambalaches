@@ -1,8 +1,9 @@
-<?php 
-  if (isset($_SESSION['user'])){ 
-   redirect('usuario');
-} 
- ?>
+<?php
+if (!isset($_SESSION['user'])){
+redirect(base_url());
+}
+$userdata= $this->session->userdata('user');
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,12 +42,19 @@
                         
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="close">Cerrar Sesión</a>
-                        </li>
-                        <li>
-                            <a href="perfil">Mi perfil</a>
-                        </li>
+                        <div class="dropdown">
+                            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="menu">
+                            <span class="caret"></span><span class="glyphicon glyphicon-opción-verticales" aria-hidden="true"></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="perfil"> <?php echo $userdata['nombre']." ". $userdata['apellido']; ?></a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="close">Cerrar Sesión</a>
+                                </li>
+                            </ul>
+                        </div>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -63,19 +71,13 @@
                                 <img src="http://placehold.it/320x150" alt="">
                                 <div class="caption">
                                     <h4 class="pull-right">$24.99</h4>
-                                    <h4><a href="#">First Product</a>
+                                    <h4><a>Nombre del producto</a>
                                     </h4>
-                                    <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                                    <p>Descripcion</p>
                                 </div>
                                 <div class="ratings">
-                                    <p class="pull-right">15 reviews</p>
-                                    <p>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                    </p>
+                                    <p class="pull-right">Cantidad de comentarios</p>
+                                    <button class="btn-link">Comentarios</button>
                                 </div>
                             </div>
                         </div>
@@ -84,8 +86,7 @@
             </div>
         </div>
         <!-- /.container -->
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </body>
