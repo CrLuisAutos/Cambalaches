@@ -17,7 +17,7 @@ $userdata= $this->session->userdata('user');
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href=" <?php base_url(); ?>util/css/user/style.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>util/css/user/style.css">
     </head>
     <body>
         <!-- Navigation -->
@@ -35,12 +35,12 @@ $userdata= $this->session->userdata('user');
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="contacto">Contáctenos</a>
-                        </li>
-                        
-                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="busqueda" placeholder="Busqueda">
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                    </form>
                     <ul class="nav navbar-nav navbar-right">
                         <div class="dropdown">
                             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="menu">
@@ -61,35 +61,32 @@ $userdata= $this->session->userdata('user');
             </div>
             <!-- /.container -->
         </nav>
+        
         <!-- Page Content -->
-       <div class='container'>
+        <div class='container'>
             <div class='row'>
                 <?php
                 if (sizeof($lista)>0):
-                    foreach ($lista as $item):
+                foreach ($lista as $item):
                 ?>
-                <div class='col-md-4'>
+                <div class='col-md-3'>
                     <div class='row'>
                         <div class='col-sm-9 col-lg-9 col-md-9'>
                             <div class='thumbnail'>
-                                <h3 class="bg-info" align="center"><?php echo $item['id_usuario']; ?></h3>
+                                <h3 class="bg-info" align="center"><?php echo $item['nombre_usuario']; echo " ".$item['apellido']; ?></h3>
                                 <?php if(!$item['estado']): ?>
                                 <h4 class="text-center label-success">En venta</h4>
                                 <?php endif; ?>
-
                                 <?php if ($item['estado']): ?>
                                 <h4 class="text-center label-danger">Vendido</h4>
                                 <?php endif; ?>
-
                                 <img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
                                 <div class='caption'>
                                     <h4 class='pull-right'> ₡ <?php echo $item['precio']; ?></h4>
-                                    <h4 class="pull-left"><a><?php echo $item['nombre'];?></a>
+                                    <h4 class="pull-left"><a><?php echo $item['nombre_publicacion'];?></a>
                                     </h4><br><br>
                                     <p class="pull-left"><?php echo $item['descripcion']; ?></p><br><br>
-                                    <button class='btn-link left'>Comentarios</button>
-                                    <button class="btn btn-link pull-right editar" ><a href="borrarPublicacion/?code=<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span></a></button>
-                                    <button data-toggle="modal" data-target="#modalEdit" class="btn btn-link pull-right btneditar" id="<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    <button class='btn-link left' type="button" data-toggle="modal" data-target="#myModal">Comentarios</button>
                                     <br>
                                 </div>
                             </div>
@@ -98,6 +95,47 @@ $userdata= $this->session->userdata('user');
                 </div>
                 <?php endforeach;?>
                 <?php endif; ?>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="container">
+                    
+                    <div class="row">
+                        <!-- Contenedor Principal -->
+                        <div class="comments-container">
+                            <ul id="comments-list" class="comments-list">
+                                <li>
+                                    <div class="comment-main-level">
+                                        
+                                        <!-- Contenedor del Comentario -->
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <h6 class="comment-name"><a>Usuario</a></h6>
+                                                <span>Fecha</span>
+                                                <i class="fa fa-reply"></i>
+                                                <i class="fa fa-heart"></i>
+                                            </div>
+                                            <div class="comment-content">
+                                                Contenido del comentario
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Respuestas de los comentarios -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <form class="form-inline"> 
+                    <button class="btn btn-primary" id="" type="submit">
+                    Comentar
+                    </button>
+                    <textarea class="form-control" placeholder="Ingrese su comentario" aria-describedby="basic-addon1" autofocus required rows="2" cols="40" name="comentario"></textarea>
+                    <button class="btn btn-danger" data-dismiss="modal" type="button">
+                    Cancelar
+                    </button>
+                </form>
             </div>
         </div>
         <!-- /.container -->

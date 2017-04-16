@@ -31,7 +31,9 @@ class User_model extends CI_Model {
   //carga todas las publicaciones
   public function cargarTodasPublicaciones()
   {
-    $query= $this->db->get('publicacion');
+      $query= $this->db->query('SELECT p.id id_publicacion,p.descripcion,p.estado,p.foto,p.nombre nombre_publicacion,p.precio, u.id id_usuario, u.nombre nombre_usuario, u.apellido 
+FROM cambalache.users u INNER JOIN cambalache.publicacion p
+ON u.id = p.id_usuario');
     return $query->result_array();
   }
   //obtiene las publicaciones hechas por un usuario
