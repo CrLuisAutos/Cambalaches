@@ -90,33 +90,84 @@ $userdata= $this->session->userdata('user');
 		<hr>
 		<div class='container'>
 			<div class='row'>
-		<?php
-		if (sizeof($lista)>0):
-			foreach ($lista as $item):
-		?>
+				<?php
+				if (sizeof($lista)>0):
+					foreach ($lista as $item):
+				?>
 				<div class='col-md-4'>
 					<div class='row'>
-						<div class='col-sm-8 col-lg-8 col-md-8'>
+						<div class='col-sm-9 col-lg-9 col-md-9'>
 							<div class='thumbnail'>
-								<img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
 
-								<div class=''>
-									<h4 class='pull-right'>Precio ₡ <?php echo $item['precio']; ?></h4>
-									<h4><a><?php echo $item['nombre']; ?></a>
-									</h4>
-									<p><?php echo $item['descripcion']; ?></p>
-								</div>
-								<div>
-									<button class='btn-link'>Comentarios</button>
+								<?php if(!$item['estado']): ?>
+								<h4 class="text-center label-success">En venta</h4>
+								<?php endif; ?>
+
+								<?php if ($item['estado']): ?>
+								<h4 class="text-center label-danger">Vendido</h4>
+								<?php endif; ?>
+
+								<img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
+								<div class='caption'>
+									<h4 class='pull-right'> ₡ <?php echo $item['precio']; ?></h4>
+									<h4 class="pull-left"><a><?php echo $item['nombre'];?></a>
+									</h4><br><br>
+									<p class="pull-left"><?php echo $item['descripcion']; ?></p><br><br>
+									<button class='btn-link left'>Comentarios</button>
+									<button class="btn btn-link pull-right editar" ><a href="borrarPublicacion/?code=<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span></a></button>
+									<button data-toggle="modal" data-target="#modalEdit" class="btn btn-link pull-right btneditar" id="<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-pencil"></span></button>
+									<br>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-<?php endforeach;?>
-<?php endif; ?>
+				<?php endforeach;?>
+				<?php endif; ?>
 			</div>
-		</div> 
+		</div>
+		<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" id="lineModalLabel">Editar publicación</h3>
+					</div>
+					<div class="modal-body">
+						<!-- content goes here -->
+						<form action="user/editarPublicacion/" method="post">
+							<div class="form-group">
+								<label>Cambiar estado de la publicación</label><br>
+								<input type="radio" name="estado" value="0" required="" id="venta">En venta <br>
+								<input type="radio" name="estado" value="1" required="" id="vendido">Vendido
+							</div>
+							<div class="form-group">
+								<label>Articulo</label>
+								<input type="text" required class="form-control" name="nombre" id="editNombre">
+							</div>
+							<div class="form-group">
+								<label>Descripción</label><br>
+								<textarea rows="3" required name="descripcion" id="editDescripcion"></textarea>
+							</div>
+							<div class="form-group">
+								<label>Precio en ₡</label><br>
+								<input type="text" name="id" hidden id="editId">
+								<input name="precio" type="number" min="100" required step="100" id="editPrecio">
+							</div>
+							<div class="modal-footer">
+								<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Cancelar</button>
+									</div>
+									<div class="btn-group" role="group">
+										<button type="submit" class="btn btn-default btn-hover-green" role="button">Guardar cambios</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- line modal -->
 		<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -130,7 +181,7 @@ $userdata= $this->session->userdata('user');
 						<form action="user/publicar" method="post">
 							<div class="form-group">
 								<label>Articulo</label>
-								<input type="text" required class="form-control" placeholder="Ingrese el nombre del articulo" name="nombre">
+								<input type="text" autofocus required class="form-control" placeholder="Ingrese el nombre del articulo" name="nombre">
 							</div>
 							<div class="form-group">
 								<label>Descripción</label><br>
@@ -149,16 +200,48 @@ $userdata= $this->session->userdata('user');
 									<div class="btn-group" role="group">
 										<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Cancelar</button>
 									</div>
-									<div class="btn-group" role="group">
-										<button type="submit" class="btn btn-default btn-hover-green" role="button">Guardar</button>
+									<div class="btn-group" role="group" >
+										<button type="submit" class="btn btn-default btn-hover-green" role="button">Publicar</button>
 									</div>
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
-					<!-- /.container -->
-					<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-					<!-- Latest compiled and minified JavaScript -->
-					<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-				</body>
-			</html>
+				</div>
+			</div>
+		</div>		
+		<!-- Cargar modal -->
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<script type="text/javaScript">
+		jQuery(document).ready(function($) {
+			
+			$(".btneditar").click(function(event) {
+		var id=  $(this).attr('id');
+		  $.ajax({
+		  	 type:  'POST',
+                url:  "<?php base_url();?>buscarPublicacion",
+                data:  {
+                	'id': id
+                },
+                success:function data(datos) {
+                	 var datos2= $.parseJSON(datos);
+
+                	 $("#editNombre").val(datos2.publicacion[0].nombre);
+                	 $("#editPrecio").val(datos2.publicacion[0].precio);
+                	 $("#editDescripcion").val(datos2.publicacion[0].descripcion);
+                	 $("#editId").val(datos2.publicacion[0].id);
+                	 if(datos2.publicacion[0].estado==0){
+                	 $("#venta").attr('checked', 'true');
+                	 }else{
+                	 $("#vendido").attr('checked', 'true');
+                	 }                	
+                }
+		  })
+		});
+	  
+	});
+		</script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</body>
+</html>

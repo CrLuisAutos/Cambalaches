@@ -28,11 +28,37 @@ class User_model extends CI_Model {
      $r = $this->db->insert('publicacion', $publicacion);
     return $r;
   }
+  //carga todas las publicaciones
+  public function cargarTodasPublicaciones()
+  {
+    $query= $this->db->get('publicacion');
+    return $query->result_array();
+  }
   //obtiene las publicaciones hechas por un usuario
   public function cargarPublicaciones($id)
   {
     $query= $this->db->get_where('publicacion',array('id_usuario' => $id));
     return $query->result_array();
+  }
+  //muestra los datos de la publicacion seleccionada
+  public function buscarPublicacion($id)
+  {
+     $query = $this->db->get_where('publicacion',
+      array('id' => $id));
+
+    return $query->result_array();
+  }
+  //actualiza una publicacion
+  public function editarPublicacion($publicacion, $id)
+  {
+    $this->db->where('id', $id);
+    $this->db->update('publicacion', $publicacion);
+
+  }
+  //elimina una publicacion
+  public function borrarPublicacion($id)
+  {
+    $this->db->delete('publicacion', array('id' => $id)); 
   }
 
 }

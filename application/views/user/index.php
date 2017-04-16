@@ -62,27 +62,42 @@ $userdata= $this->session->userdata('user');
             <!-- /.container -->
         </nav>
         <!-- Page Content -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
-                                <div class="caption">
-                                    <h4 class="pull-right">$24.99</h4>
-                                    <h4><a>Nombre del producto</a>
-                                    </h4>
-                                    <p>Descripcion</p>
-                                </div>
-                                <div class="ratings">
-                                    <p class="pull-right">Cantidad de comentarios</p>
-                                    <button class="btn-link">Comentarios</button>
+       <div class='container'>
+            <div class='row'>
+                <?php
+                if (sizeof($lista)>0):
+                    foreach ($lista as $item):
+                ?>
+                <div class='col-md-4'>
+                    <div class='row'>
+                        <div class='col-sm-9 col-lg-9 col-md-9'>
+                            <div class='thumbnail'>
+                                <h3 class="bg-info" align="center"><?php echo $item['id_usuario']; ?></h3>
+                                <?php if(!$item['estado']): ?>
+                                <h4 class="text-center label-success">En venta</h4>
+                                <?php endif; ?>
+
+                                <?php if ($item['estado']): ?>
+                                <h4 class="text-center label-danger">Vendido</h4>
+                                <?php endif; ?>
+
+                                <img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
+                                <div class='caption'>
+                                    <h4 class='pull-right'> ₡ <?php echo $item['precio']; ?></h4>
+                                    <h4 class="pull-left"><a><?php echo $item['nombre'];?></a>
+                                    </h4><br><br>
+                                    <p class="pull-left"><?php echo $item['descripcion']; ?></p><br><br>
+                                    <button class='btn-link left'>Comentarios</button>
+                                    <button class="btn btn-link pull-right editar" ><a href="borrarPublicacion/?code=<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span></a></button>
+                                    <button data-toggle="modal" data-target="#modalEdit" class="btn btn-link pull-right btneditar" id="<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    <br>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php endforeach;?>
+                <?php endif; ?>
             </div>
         </div>
         <!-- /.container -->

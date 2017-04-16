@@ -6,8 +6,10 @@ class User extends CI_Controller {
 	//carga de vistas
 	public function index()
 	{
+		$r=$this->User_model->cargarTodasPublicaciones();
+		$data['lista']=$r;
 		//carga la vista user index
-		$this->load->view('user/index.php');
+		$this->load->view('user/index.php', $data);
 		
 	}
 		//carga el login
@@ -87,14 +89,39 @@ class User extends CI_Controller {
 	//agregar una nueva publicacion en la base
 	public function publicar()
 	{
-		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'), 'foto'=>$this-> input->post('foto'), 'id_usuario'=> $this->usuarioActual());
+		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'), 'foto'=>$this-> input->post('foto'), 'id_usuario'=> $this->usuarioActual(), 'estado'=> '0');
 		$r= $this->User_model->publicar($publicacion);
 		if (sizeof($r)>0) {
 			redirect('perfil');
 		}else{
-
+			redirect(base_url());
 		}
 
+	}
+	//actualiza los datos de una publicacion
+	public function editarPublicacion()
+	{
+		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'),
+			'estado'=> $this->input->post('estado'));
+		$r=$this->User_model->editarPublicacion($publicacion, $this->input->post('id'));
+		redirect('perfil');
+	}
+	//ajax
+	public function buscarPublicacion()
+	{
+		  $id = $this->input->post('id');
+
+		  $r= $this->User_model->buscarPublicacion($id);
+		  $data['publicacion']= $r;
+		  $r= json_encode($data);
+		  echo $r;
+	}
+	//borra un publicacion
+	public function borrarPublicacion()
+	{
+		$id=$this->input->get('code');
+		$r= $this->User_model->borrarPublicacion($id);
+		redirect('perfil');
 	}
 	// muestra el id del usuario actual
 	public function usuarioActual()
