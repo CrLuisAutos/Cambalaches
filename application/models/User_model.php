@@ -60,19 +60,30 @@ ON u.id = p.id_usuario');
   //elimina una publicacion
   public function borrarPublicacion($id)
   {
+    $this->db->delete('comentario', array('id_publicacion' => $id)); 
     $this->db->delete('publicacion', array('id' => $id)); 
   }
   //obtiene los comentarios de una publicacion
   public function mostrarComentarios($id)
   {
-    $query = $this->db->get_where('comentario',
-      array('id_publicacion' => $id));
-    return $query->result_array();
+   $this->db->select('c.comentario,c.id,u.nombre, u.apellido');
+   $this->db->from('comentario c'); 
+   $this->db->join('publicacion p', 'c.id_publicacion=p.id');
+   $this->db->join('users u', 'u.id= c.id_usuario');
+   $this->db->where('c.id_publicacion',$id);
+   $this->db->order_by('c.id','asc');         
+   $query = $this->db->get(); 
+   return $query->result_array();
+
+    //$query = $this->db->get_where('comentario',
+      //array('id_publicacion' => $id));
+    //return $query->result_array();
   }
   //guadar comentarios
   public function guardarComentario($comentario)
   {
     $this->db->insert('comentario', $comentario);
   }
+
 
 }

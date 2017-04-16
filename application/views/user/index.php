@@ -106,6 +106,37 @@ $userdata= $this->session->userdata('user');
                         <div class="comments-container">
                             <ul id="comments-list" class="comments-list">
                                 
+                                <li>
+                                    <div class="comment-main-level">
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <h5 class="comment-name"><a>Usuario</a></h6>
+                                                <button class='btn btn-info pull-right'><span class='glyphicon glyphicon-remove'></span></button>
+                                                <i class="fa fa-reply"></i>
+                                                <i class="fa fa-heart"></i>
+                                            </div>
+                                            <div class="comment-content">
+                                                Contenido del comentario
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="comment-main-level">
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <h6 class="comment-name"><a>Usuario</a></h6>
+                                                <span>Fecha</span>
+                                                <i class="fa fa-reply"></i>
+                                                <i class="fa fa-heart"></i>
+                                            </div>
+                                            <div class="comment-content">
+                                                Contenido del comentario
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                
                             </ul>
                         </div>
                     </div>

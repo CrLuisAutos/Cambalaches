@@ -36,7 +36,10 @@ var id_publicacion="";
                 	$("#comments-list li").closest('li').remove();
                 	 $.each(datosJson, function(val) {
                 	 	 for (var i = 0; i < datosJson[val].length; i++) {
-                	$(".comments-container ul").append("<li><div class='comment-main-level'><div class='comment-box'><div class='comment-head'><h6 class='comment-name'><a>"+datosJson.comentario[i].id_usuario+"</a></h6><i class='fa fa-reply'></i><i class='fa fa-heart'></i></div><div class='comment-content'>"+datosJson.comentario[i].comentario+"</div></div></div></li>");
+                	$(".comments-container ul").append("<li><div class='comment-main-level'><div class='comment-box'><div class='comment-head'><h6 class='comment-name'><a>"
+                	+datosJson.comentario[i].nombre+" "+datosJson.comentario[i].apellido
+                	+"</a></h6><span class='glyphicon glyphicon-remove pull-right'></span><i class='fa fa-reply'></i><i class='fa fa-heart'></i></div><div class='comment-content'>"
+                	+datosJson.comentario[i].comentario+"</div></div></div></li>");
                 	 																																																															//$("#editNombre").val(datosJson.publicacion[0].nombre);              	
                 	 	 }
                 	 });
