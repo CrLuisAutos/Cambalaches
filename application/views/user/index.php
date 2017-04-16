@@ -37,7 +37,7 @@ $userdata= $this->session->userdata('user');
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="busqueda" placeholder="Busqueda">
+                            <input type="text" autofocus class="form-control" name="busqueda" placeholder="Busqueda">
                         </div>
                         <button type="submit" class="btn btn-default">Buscar</button>
                     </form>
@@ -86,7 +86,7 @@ $userdata= $this->session->userdata('user');
                                     <h4 class="pull-left"><a><?php echo $item['nombre_publicacion'];?></a>
                                     </h4><br><br>
                                     <p class="pull-left"><?php echo $item['descripcion']; ?></p><br><br>
-                                    <button class='btn-link left' type="button" data-toggle="modal" data-target="#myModal">Comentarios</button>
+                                    <button class='btn-link left btnComentario' type="button" data-toggle="modal" data-target="#myModal" id="<?php echo $item['id_publicacion']; ?>" >Comentarios</button>
                                     <br>
                                 </div>
                             </div>
@@ -105,35 +105,20 @@ $userdata= $this->session->userdata('user');
                         <!-- Contenedor Principal -->
                         <div class="comments-container">
                             <ul id="comments-list" class="comments-list">
-                                <li>
-                                    <div class="comment-main-level">
-                                        
-                                        <!-- Contenedor del Comentario -->
-                                        <div class="comment-box">
-                                            <div class="comment-head">
-                                                <h6 class="comment-name"><a>Usuario</a></h6>
-                                                <span>Fecha</span>
-                                                <i class="fa fa-reply"></i>
-                                                <i class="fa fa-heart"></i>
-                                            </div>
-                                            <div class="comment-content">
-                                                Contenido del comentario
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Respuestas de los comentarios -->
-                                </li>
+                                
                             </ul>
                         </div>
                     </div>
                 </div>
-                <form class="form-inline"> 
-                    <button class="btn btn-primary" id="" type="submit">
+                <form class="form-inline">
+                    <button class="btn btn-primary" type="button" id="comentar">
+                    <span class="glyphicon glyphicon-comment"></span>
                     Comentar
                     </button>
-                    <textarea class="form-control" placeholder="Ingrese su comentario" aria-describedby="basic-addon1" autofocus required rows="2" cols="40" name="comentario"></textarea>
+                    <textarea id="text" class="form-control" autofocus placeholder="Ingrese su comentario" aria-describedby="basic-addon1" required rows="2" cols="40" name="comentario"></textarea>
                     <button class="btn btn-danger" data-dismiss="modal" type="button">
-                    Cancelar
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cerrar
                     </button>
                 </form>
             </div>
@@ -142,5 +127,6 @@ $userdata= $this->session->userdata('user');
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="<?php base_url(); ?>util/js/user/file.js" ></script>
     </body>
 </html>

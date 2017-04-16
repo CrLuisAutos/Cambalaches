@@ -55,5 +55,7 @@ $route['perfil'] = 'user/perfil';
 $route['close'] = 'user/closeSesion';
 $route['buscarPublicacion'] = 'user/buscarPublicacion';
 $route['borrarPublicacion'] = 'user/borrarPublicacion';
+$route['mostrarComentarios'] = 'user/mostrarComentarios';
+$route['guardarComentario'] = 'user/guardarComentario';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -62,5 +62,17 @@ ON u.id = p.id_usuario');
   {
     $this->db->delete('publicacion', array('id' => $id)); 
   }
+  //obtiene los comentarios de una publicacion
+  public function mostrarComentarios($id)
+  {
+    $query = $this->db->get_where('comentario',
+      array('id_publicacion' => $id));
+    return $query->result_array();
+  }
+  //guadar comentarios
+  public function guardarComentario($comentario)
+  {
+    $this->db->insert('comentario', $comentario);
+  }
 
 }

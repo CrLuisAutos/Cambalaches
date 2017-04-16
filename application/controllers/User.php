@@ -110,13 +110,25 @@ class User extends CI_Controller {
 	public function buscarPublicacion()
 	{
 		  $id = $this->input->post('id');
-
 		  $r= $this->User_model->buscarPublicacion($id);
 		  $data['publicacion']= $r;
 		  $r= json_encode($data);
 		  echo $r;
 	}
 	//borra un publicacion
+	public function mostrarComentarios()
+	{
+		$r=$this->User_model->mostrarComentarios($this->input->post('id'));
+		$data['comentario']= $r;
+		$r= json_encode($data);
+		echo $r;
+	}
+	//guadar un comentario
+	public function guardarComentario()
+	{
+		$comentario = array('id_publicacion' => $this->input->post('id_publicacion'),'comentario'=>$this->input->post('comentario'),'id_usuario'=> $this->usuarioActual());
+		$this->User_model->guardarComentario($comentario);
+	}
 	public function borrarPublicacion()
 	{
 		$id=$this->input->get('code');
