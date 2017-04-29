@@ -31,13 +31,13 @@ $userdata= $this->session->userdata('user');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php base_url(); ?>">Cambalaches</a>
+                    <a class="navbar-brand" href="<?php base_url();?>usuario">Cambalaches</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="navbar-form navbar-left" role="search">
+                    <form class="navbar-form navbar-left" role="search" action="buscar" method="get">
                         <div class="form-group">
-                            <input type="text" autofocus class="form-control" name="busqueda" placeholder="Busqueda">
+                            <input type="text" autofocus required class="form-control" name="search" placeholder="Busqueda">
                         </div>
                         <button type="submit" class="btn btn-default">Buscar</button>
                     </form>
@@ -47,7 +47,7 @@ $userdata= $this->session->userdata('user');
                             <span class="caret"></span><span class="glyphicon glyphicon-opción-verticales" aria-hidden="true"></span></button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="perfil"> <?php echo $userdata['nombre']." ". $userdata['apellido']; ?></a>
+                                    <a href="perfil" class="userData" id="<?php echo $userdata['id'];?>" > <?php echo $userdata['nombre']." ". $userdata['apellido']; ?></a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
@@ -97,63 +97,33 @@ $userdata= $this->session->userdata('user');
                 <?php endif; ?>
             </div>
         </div>
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="container">
-                    
-                    <div class="row">
-                        <!-- Contenedor Principal -->
-                        <div class="comments-container">
-                            <ul id="comments-list" class="comments-list">
-                                
-                                <li>
-                                    <div class="comment-main-level">
-                                        <div class="comment-box">
-                                            <div class="comment-head">
-                                                <h5 class="comment-name"><a>Usuario</a></h6>
-                                                <button class='btn btn-info pull-right'><span class='glyphicon glyphicon-remove'></span></button>
-                                                <i class="fa fa-reply"></i>
-                                                <i class="fa fa-heart"></i>
-                                            </div>
-                                            <div class="comment-content">
-                                                Contenido del comentario
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="comment-main-level">
-                                        <div class="comment-box">
-                                            <div class="comment-head">
-                                                <h6 class="comment-name"><a>Usuario</a></h6>
-                                                <span>Fecha</span>
-                                                <i class="fa fa-reply"></i>
-                                                <i class="fa fa-heart"></i>
-                                            </div>
-                                            <div class="comment-content">
-                                                Contenido del comentario
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                
-                            </ul>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Comentarios</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <!-- Contenedor Principal -->
+                            <div class="comments-container">
+                                <ul id="comments-list" class="comments-list">
+                                    <!-- Comentarios -->
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <form class="form-inline">
+                            <input class="btn btn-primary" type="button" id="comentar" value="Comentar">
+                            <textarea id="text" class="form-control" autofocus placeholder="Ingrese su comentario" aria-describedby="basic-addon1" required rows="2" cols="100" name="comentario" required></textarea>
+                        </form>
+                    </div>
                 </div>
-                <form class="form-inline">
-                    <button class="btn btn-primary" type="button" id="comentar">
-                    <span class="glyphicon glyphicon-comment"></span>
-                    Comentar
-                    </button>
-                    <textarea id="text" class="form-control" autofocus placeholder="Ingrese su comentario" aria-describedby="basic-addon1" required rows="2" cols="40" name="comentario"></textarea>
-                    <button class="btn btn-danger" data-dismiss="modal" type="button">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    Cerrar
-                    </button>
-                </form>
             </div>
         </div>
+        
         <!-- /.container -->
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <!-- Latest compiled and minified JavaScript -->

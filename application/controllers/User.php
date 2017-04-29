@@ -87,9 +87,8 @@ class User extends CI_Controller {
 		return $r;
 	}
 	//agregar una nueva publicacion en la base
-	public function publicar()
+	public function publicar($publicacion)
 	{
-		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'), 'foto'=>$this-> input->post('foto'), 'id_usuario'=> $this->usuarioActual(), 'estado'=> '0');
 		$r= $this->User_model->publicar($publicacion);
 		if (sizeof($r)>0) {
 			redirect('perfil');
@@ -116,6 +115,51 @@ class User extends CI_Controller {
 		  echo $r;
 	}
 	//borra un publicacion
+	public function borrarPublicacion()
+	{
+		$id=$this->input->get('code');
+		$this->obtenerImagen($id);
+		$this->User_model->borrarPublicacion($id);
+		redirect('perfil');
+	}
+	//ajax
+	public function eliminarHistorial()
+	{
+		$this->User_model->eliminarHistorial($this->input->post('id'));
+	}
+	public function obtenerImagen($id)
+	{
+		$r= $this->User_model->obtenerImagen($id);
+		unlink("./util/img/".$r[0]['foto']);  //borra el archivo
+	}
+	//subir imagenes al servidor
+	public function do_upload()
+    {
+
+        $config['upload_path'] = "./util/img/";
+        $config['allowed_types'] = "jpg|png";
+        $this->load->library('upload', $config);
+        if(!$this->upload->do_upload()){
+    		$datos['error'] = $this->upload->display_errors();
+    		foreach ($datos as $error => $value) {
+    			echo $value;
+    		}
+        }
+        else{
+    		$datos['success'] = $this->upload->data();
+    		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'), 'foto'=>$datos['success']['file_name'], 'id_usuario'=> $this->usuarioActual(), 'estado'=> '0');
+    		$this->publicar($publicacion);
+
+        }
+    }
+	//buscar un publicacion
+	public function busquedaUsuario()
+	{
+		$buscar=$this->input->get('search');
+		$r= $this->User_model->busquedaUsuario($buscar);
+		$data['lista']= $r;
+		$this->load->view('user/index.php', $data);
+	}
 	public function mostrarComentarios()
 	{
 		$r=$this->User_model->mostrarComentarios($this->input->post('id'));
@@ -129,11 +173,9 @@ class User extends CI_Controller {
 		$comentario = array('id_publicacion' => $this->input->post('id_publicacion'),'comentario'=>$this->input->post('comentario'),'id_usuario'=> $this->usuarioActual());
 		$this->User_model->guardarComentario($comentario);
 	}
-	public function borrarPublicacion()
+	public function eliminarComentario()
 	{
-		$id=$this->input->get('code');
-		$r= $this->User_model->borrarPublicacion($id);
-		redirect('perfil');
+		$this->User_model->eliminarComentario($this->input->post('id'));
 	}
 	// muestra el id del usuario actual
 	public function usuarioActual()

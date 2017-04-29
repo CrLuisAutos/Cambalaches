@@ -71,7 +71,7 @@ $userdata= $this->session->userdata('user');
 							</div>
 							<div class="col-sm-6 col-md-8">
 								<h3>Bienvenido!</h3>
-								<h4><?php echo $userdata['nombre']." ". $userdata['apellido']; ?> </h4>
+								<h4 id="<?php echo $userdata['id'];?>" class="usuarioActual" ><?php echo $userdata['nombre']." ". $userdata['apellido']; ?> </h4>
 								<p>
 									<i class="glyphicon glyphicon-envelope"></i><?php echo $userdata['email']; ?>
 									<br />
@@ -83,13 +83,15 @@ $userdata= $this->session->userdata('user');
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<h4 align="center">Administrar publicaciones</h4>
-					<button data-toggle="modal" data-target="#squarespaceModal" class="btn btn-primary center-block">Publicar un artículo</button>
+					<button data-toggle="modal" data-target="#squarespaceModal" class="btn btn-primary center-block">Publicar un artículo</button><br>
+					<button class="btn btn-primary center-block" id="btnEliminar">Eliminar todas mis publicaciones</button><br>
+					<button class="btn btn-primary center-block" id="btnDeseo">Visualizar publicaciones deseadas</button>
 				</div>
 			</div>
 		</div>
 		<hr>
 		<div class='container'>
-			<div class='row'>
+			<div class='row' id="container">
 				<?php
 				if (sizeof($lista)>0):
 					foreach ($lista as $item):
@@ -176,9 +178,8 @@ $userdata= $this->session->userdata('user');
 						<h3 class="modal-title" id="lineModalLabel">Publica tu artículo</h3>
 					</div>
 					<div class="modal-body">
-						
 						<!-- content goes here -->
-						<form action="user/publicar" method="post">
+						<form action="user/do_upload" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Articulo</label>
 								<input type="text" autofocus required class="form-control" placeholder="Ingrese el nombre del articulo" name="nombre">
@@ -189,7 +190,7 @@ $userdata= $this->session->userdata('user');
 							</div>
 							<div class="form-group">
 								<label>Agrega una foto</label>
-								<input required type="file" name="foto">
+								<input required type="file" name="userfile" accept="image/*">
 							</div>
 							<div class="form-group">
 								<label>Precio en ₡</label>
@@ -209,39 +210,11 @@ $userdata= $this->session->userdata('user');
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>	
 		<!-- Cargar modal -->
 		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-		<script type="text/javaScript">
-		jQuery(document).ready(function($) {
-			
-			$(".btneditar").click(function(event) {
-		var id=  $(this).attr('id');
-		  $.ajax({
-		  	 type:  'POST',
-                url:  "<?php base_url();?>buscarPublicacion",
-                data:  {
-                	'id': id
-                },
-                success:function data(datos) {
-                	 var datos2= $.parseJSON(datos);
-
-                	 $("#editNombre").val(datos2.publicacion[0].nombre);
-                	 $("#editPrecio").val(datos2.publicacion[0].precio);
-                	 $("#editDescripcion").val(datos2.publicacion[0].descripcion);
-                	 $("#editId").val(datos2.publicacion[0].id);
-                	 if(datos2.publicacion[0].estado==0){
-                	 $("#venta").attr('checked', 'true');
-                	 }else{
-                	 $("#vendido").attr('checked', 'true');
-                	 }                	
-                }
-		  })
-		});
-	  
-	});
-		</script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="<?php base_url(); ?>util/js/user/perfil.js" ></script>
 	</body>
 </html>

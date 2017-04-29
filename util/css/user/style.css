@@ -35,7 +35,7 @@ body {
  * Lista de Comentarios
  =======================*/
 .comments-container {
-	margin: 60px auto 15px;
+	margin: 20px auto 15px;
 	width: 68px;
 }
 
@@ -51,7 +51,7 @@ body {
 }
 
 .comments-list {
-	margin-top: 30px;
+	margin-top: 3px;
 	position: relative;
 }
 
@@ -64,7 +64,7 @@ body {
 	height: 100%;
 	background: #c7cacb;
 	position: absolute;
-	left: 32px;
+	
 	top: 0;
 }
 
@@ -73,7 +73,7 @@ body {
 	position: absolute;
 	background: #c7cacb;
 	bottom: 0;
-	left: 27px;
+	
 	width: 7px;
 	height: 7px;
 	border: 3px solid #dee1e3;
@@ -84,7 +84,7 @@ body {
 
 
 .comments-list li {
-	margin-bottom: 15px;
+	
 	display: block;
 	position: relative;
 }
@@ -121,11 +121,6 @@ body {
 	height: 100%;
 }
 
-.comment-avatar {
-	width: 50px;
-	height: 50px;
-}
-
 .comment-main-level:after {
 	content: '';
 	width: 0;
@@ -137,7 +132,7 @@ body {
  * Caja del Comentario
  ---------------------------*/
 .comments-list .comment-box {
-	width: 680px;
+	width: 580px;
 	float: right;
 	position: relative;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
@@ -155,14 +150,12 @@ body {
 	border-style: solid;
 	border-color: transparent #FCFCFC;
 	top: 8px;
-	left: -11px;
 }
 
 .comments-list .comment-box:before {
 	border-width: 11px 13px 11px 0;
 	border-color: transparent rgba(0,0,0,0.05);
-	left: -12px;
-}
+	}
 
 .comment-box {
 	width: 610px;
@@ -255,4 +248,9 @@ body {
 }
 textarea {
     resize: none;
+}
+.modal-body{
+    height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
