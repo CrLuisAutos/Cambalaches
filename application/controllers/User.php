@@ -154,6 +154,11 @@ class User extends CI_Controller {
 		  	echo $r;
 		}
 	}
+	public function borrarDeseo()
+	{
+		$id=$this->input->get('code');
+		$this->User_model->borrarDeseo($id);
+	}
 	public function obtenerImagen($id)
 	{
 		$r= $this->User_model->obtenerImagen($id);

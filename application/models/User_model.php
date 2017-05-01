@@ -86,6 +86,10 @@ class User_model extends CI_Model {
     $query = $this->db->get(); 
     return $query->result_array();
   }
+  public function borrarDeseo($id)
+  {
+    $this->db->delete('deseo', array('id_publicacion' => $id));  
+  }
   //elimina todas las publicaciones de un usuario
   public function eliminarHistorial($id)
   {

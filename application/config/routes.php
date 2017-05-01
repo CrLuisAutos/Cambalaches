@@ -63,5 +63,6 @@ $route['upload'] = 'user/do_upload';
 $route['eliminarHistorial'] = 'user/eliminarHistorial';
 $route['desear'] = 'user/guardarPublicacionDeseada';
 $route['mostrarDeseo'] = 'user/mostrarDeseo';
+$route['borrarDeseo'] = 'user/borrarDeseo';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
