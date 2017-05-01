@@ -157,7 +157,8 @@ class User extends CI_Controller {
 	public function borrarDeseo()
 	{
 		$id=$this->input->get('code');
-		$this->User_model->borrarDeseo($id);
+		$r=$this->User_model->borrarDeseo($id);
+		redirect('perfil');
 	}
 	public function obtenerImagen($id)
 	{

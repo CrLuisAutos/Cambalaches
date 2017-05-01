@@ -104,7 +104,7 @@ $userdata= $this->session->userdata('user');
 								<h4 class="text-center label-warning">Oferta: Cambalache</h4>
 								<?php endif; ?>
 								<img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
-								<div class='caption'>
+								<div class='caption' id="caption">
 									<h4 class='pull-right'> ₡ <?php echo $item['precio']; ?></h4>
 									<h4 class="pull-left"><a><?php echo $item['nombre'];?></a>
 									</h4><br><br>

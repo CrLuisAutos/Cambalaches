@@ -77,7 +77,7 @@ class User_model extends CI_Model {
   }
   public function mostrarDeseo($id_usuario)
   {
-    $this->db->select('p.id id_publicacion,p.descripcion, p.estado, p.foto, p.nombre nombre_publicacion, p.precio, u.id id_usuario, u.nombre nombre_usuario, u.apellido, d.id');
+    $this->db->select('p.id id_publicacion,p.descripcion, p.estado, p.foto, p.nombre nombre_publicacion, p.precio, d.id_usuario, u.nombre nombre_usuario, u.apellido, d.id');
     $this->db->from('deseo d'); 
     $this->db->join('publicacion p' , 'p.id = d.id_publicacion');
     $this->db->join('users u' , 'u.id = p.id_usuario');
@@ -88,7 +88,7 @@ class User_model extends CI_Model {
   }
   public function borrarDeseo($id)
   {
-    $this->db->delete('deseo', array('id_publicacion' => $id));  
+    $this->db->delete('deseo', array('id' => $id));  
   }
   //elimina todas las publicaciones de un usuario
   public function eliminarHistorial($id)

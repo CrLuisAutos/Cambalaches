@@ -15,6 +15,7 @@ function mostrarComentarios() {
             $("#comments-list li").closest('li').remove();
             $.each(datosJson, function(val) {
                 for (var i = 0; i < datosJson[val].length; i++) {
+                    console.log(datosJson.comentario[i]);
                     //permite borrar solo si el comentario le pertenece
                     if (datosJson.comentario[i].id_usuario == usuarioActual) {
                         $(".comments-container ul").append("<li><div class='comment-main-level'><div class='comment-box'><div class='comment-head'><h6 class='comment-name'><a>" + datosJson.comentario[i].nombre + " " + datosJson.comentario[i].apellido +

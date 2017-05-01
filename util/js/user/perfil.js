@@ -41,7 +41,7 @@ jQuery(document).ready(function($) {
         })
     });
 
-   $("#container").on("click", ".btnDinamComentario", function() {
+    $("#container").on("click", ".btnDinamComentario", function() {
         id_publicacion = this.id;
         mostrarComentarios();
 
@@ -62,6 +62,7 @@ jQuery(document).ready(function($) {
                 var arrayDatos = $.parseJSON(datos);
                 $.each(arrayDatos, function(val) {
                     for (var i = 0; i < arrayDatos[val].length; i++) {
+                        console.log(arrayDatos.deseo[i].id);
                         var stringAppend = "<div class='col-md-3'><div class='row'><div class='col-sm-9 col-lg-9 col-md-9'>" +
                             "<div class='thumbnail'><h3 class='bg-info' align='center'>" + arrayDatos.deseo[i].nombre_usuario + " " + arrayDatos.deseo[i].apellido + "</h3>";
                         if (arrayDatos.deseo[i].estado == 0) {
@@ -72,11 +73,10 @@ jQuery(document).ready(function($) {
                         stringAppend += "<img src='util/img/" + arrayDatos.deseo[i].foto + "' class='img-responsive'>";
                         stringAppend += "<div class = 'caption'><h4 class = 'pull-right'> ₡" + arrayDatos.deseo[i].precio + "</h4>";
                         stringAppend += "<h4 class = 'pull-left'><a>" + arrayDatos.deseo[i].nombre_publicacion + "</a></h4>";
-                        stringAppend += "<h4 class = 'pull-left'> <a> <?php echo $item['nombre_publicacion'];?> </a> </h4>";
-                        stringAppend += "<br><br><p class='pull-left'>" + arrayDatos.deseo[i].descripcion + "</p > <br> <br>";
-                        stringAppend += "<button class = 'btnDinamComentario btn-link left' type='button' data-toggle='modal' data-target= '#myModal' id ='" + arrayDatos.deseo[i].id_publicacion + "'> Comentarios </button>";
-                        stringAppend += "<button class='btn btn-link pull-right' ><a href='borrarDeseo/?code='" + arrayDatos.deseo[i].id_publicacion + "'><span class='glyphicon glyphicon-trash pull-right' aria-hidden='true'></span></a></button>";
-                        stringAppend += "</div></div></div></div></div>"
+                        stringAppend += "<br><br><p class='pull-left'>" + arrayDatos.deseo[i].descripcion + "</p> <br> <br>";
+                        stringAppend += "<button class = 'btnDinamComentario btn-link left' type='button' data-toggle='modal' data-target= '#myModal' id ='" + arrayDatos.deseo[i].id_publicacion+"'> Comentarios </button>";
+                        stringAppend += "<button class='btn btn-link pull-right'><a href='borrarDeseo/?code=" + arrayDatos.deseo[i].id + "'><span class='glyphicon glyphicon-trash pull-right' aria-hidden='true'></span></a></button>";
+                        stringAppend += "</div></div></div>";
                         $("#container").append(stringAppend);
                     }
                 });
