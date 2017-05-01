@@ -174,7 +174,7 @@ $userdata= $this->session->userdata('user');
 							<div class="form-group">
 								<label>Precio en ₡</label><br>
 								<input type="text" name="id" hidden id="editId">
-								<input name="precio" type="number" min="100" required step="100" id="editPrecio">
+								<input name="precio" type="number" min="0" required step="100" id="editPrecio">
 							</div>
 							<div class="modal-footer">
 								<div class="btn-group btn-group-justified" role="group" aria-label="group button">
