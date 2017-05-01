@@ -68,17 +68,18 @@ $userdata= $this->session->userdata('user');
                 <?php
                 if (sizeof($lista)>0):
                 foreach ($lista as $item):
+                    if ($item['estado']!=1):
                 ?>
                 <div class='col-md-3'>
                     <div class='row'>
                         <div class='col-sm-9 col-lg-9 col-md-9'>
                             <div class='thumbnail'>
                                 <h3 class="bg-info" align="center"><?php echo $item['nombre_usuario']; echo " ".$item['apellido']; ?></h3>
-                                <?php if(!$item['estado']): ?>
-                                <h4 class="text-center label-success">En venta</h4>
+                                <?php if($item['estado']==0): ?>
+                                <h4 class="text-center label-success">Oferta: En venta</h4>
                                 <?php endif; ?>
-                                <?php if ($item['estado']): ?>
-                                <h4 class="text-center label-danger">Vendido</h4>
+                                <?php if ($item['estado']==2): ?>
+                                <h4 class="text-center label-warning">Oferta: Cambalache</h4>
                                 <?php endif; ?>
                                 <img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
                                 <div class='caption'>
@@ -86,13 +87,18 @@ $userdata= $this->session->userdata('user');
                                     <h4 class="pull-left"><a><?php echo $item['nombre_publicacion'];?></a>
                                     </h4><br><br>
                                     <p class="pull-left"><?php echo $item['descripcion']; ?></p><br><br>
-                                    <button class='btn-link left btnComentario' type="button" data-toggle="modal" data-target="#myModal" id="<?php echo $item['id_publicacion']; ?>" >Comentarios</button>
+                                    <button class='btn-link left btnComentario' type="button" data-toggle="modal" data-target="#myModal" id="<?php echo $item['id_publicacion']; ?>">Comentarios</button>
+                                    <?php 
+                                    if (!($userdata['id']== $item['id_usuario'])): ?>
+                                    <button id="<?php echo $item['id_publicacion']; ?>" class="btnDeseo btn btn-xs btn-danger right data-toggle="tooltip" title="Guardar"><span class="glyphicon glyphicon-heart"></span></button>
                                     <br>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
                 <?php endforeach;?>
                 <?php endif; ?>
             </div>
@@ -128,6 +134,7 @@ $userdata= $this->session->userdata('user');
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="<?php base_url(); ?>util/js/user/notify.min.js" ></script>
         <script type="text/javascript" src="<?php base_url(); ?>util/js/user/file.js" ></script>
     </body>
 </html>

@@ -35,12 +35,6 @@ $userdata= $this->session->userdata('user');
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li>
-							<a href="contacto">Contáctenos</a>
-						</li>
-						
-					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<div class="dropdown">
 							<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="menu">
@@ -70,7 +64,7 @@ $userdata= $this->session->userdata('user');
 								<img src="<?php base_url(); ?>util/img/perfil.jpg" alt="" class="img-rounded img-responsive" />
 							</div>
 							<div class="col-sm-6 col-md-8">
-								<h3>Bienvenido!</h3>
+								<h3 class="userData" id="<?php echo $userdata['id']; ?>">Bienvenido!</h3>
 								<h4 id="<?php echo $userdata['id'];?>" class="usuarioActual" ><?php echo $userdata['nombre']." ". $userdata['apellido']; ?> </h4>
 								<p>
 									<i class="glyphicon glyphicon-envelope"></i><?php echo $userdata['email']; ?>
@@ -85,11 +79,11 @@ $userdata= $this->session->userdata('user');
 					<h4 align="center">Administrar publicaciones</h4>
 					<button data-toggle="modal" data-target="#squarespaceModal" class="btn btn-primary center-block">Publicar un artículo</button><br>
 					<button class="btn btn-primary center-block" id="btnEliminar">Eliminar todas mis publicaciones</button><br>
-					<button class="btn btn-primary center-block" id="btnDeseo">Visualizar publicaciones deseadas</button>
+					<button class="btn btn-primary center-block" id="btnDeseo">Visualizar publicaciones favoritas</button>
 				</div>
 			</div>
 		</div>
-		<hr>
+		<h4 id="titulo" class="text-center label-success">Mis publicaciones</h4>
 		<div class='container'>
 			<div class='row' id="container">
 				<?php
@@ -100,23 +94,23 @@ $userdata= $this->session->userdata('user');
 					<div class='row'>
 						<div class='col-sm-9 col-lg-9 col-md-9'>
 							<div class='thumbnail'>
-
-								<?php if(!$item['estado']): ?>
-								<h4 class="text-center label-success">En venta</h4>
+								<?php if($item['estado']==0): ?>
+								<h4 class="text-center label-success">Oferta: En venta</h4>
 								<?php endif; ?>
-
-								<?php if ($item['estado']): ?>
-								<h4 class="text-center label-danger">Vendido</h4>
+								<?php if($item['estado']==1): ?>
+								<h4 class="text-center label-danger">Oferta: Vendido</h4>
 								<?php endif; ?>
-
+								<?php if ($item['estado']==2): ?>
+								<h4 class="text-center label-warning">Oferta: Cambalache</h4>
+								<?php endif; ?>
 								<img src='<?php base_url(); ?>util/img/<?php echo $item['foto'] ?>' class="img-responsive">
 								<div class='caption'>
 									<h4 class='pull-right'> ₡ <?php echo $item['precio']; ?></h4>
 									<h4 class="pull-left"><a><?php echo $item['nombre'];?></a>
 									</h4><br><br>
 									<p class="pull-left"><?php echo $item['descripcion']; ?></p><br><br>
-									<button class='btn-link left'>Comentarios</button>
-									<button class="btn btn-link pull-right editar" ><a href="borrarPublicacion/?code=<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span></a></button>
+									<button class='btn-link left btnComentario' type="button" data-toggle="modal" data-target="#myModal" id="<?php echo $item['id']; ?>" >Comentarios</button>
+									<button class="btn btn-link pull-right" ><a href="borrarPublicacion/?code=<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-trash pull-right" aria-hidden="true"></span></a></button>
 									<button data-toggle="modal" data-target="#modalEdit" class="btn btn-link pull-right btneditar" id="<?php echo $item['id']; ?>"><span class="glyphicon glyphicon-pencil"></span></button>
 									<br>
 								</div>
@@ -126,6 +120,32 @@ $userdata= $this->session->userdata('user');
 				</div>
 				<?php endforeach;?>
 				<?php endif; ?>
+			</div>
+		</div>
+		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Comentarios</h4>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<!-- Contenedor Principal -->
+							<div class="comments-container">
+								<ul id="comments-list" class="comments-list">
+									<!-- Comentarios -->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<form class="form-inline">
+							<input class="btn btn-primary" type="button" id="comentar" value="Comentar">
+							<textarea id="text" class="form-control" autofocus placeholder="Ingrese su comentario" aria-describedby="basic-addon1" required rows="2" cols="100" name="comentario" required></textarea>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -140,7 +160,8 @@ $userdata= $this->session->userdata('user');
 							<div class="form-group">
 								<label>Cambiar estado de la publicación</label><br>
 								<input type="radio" name="estado" value="0" required="" id="venta">En venta <br>
-								<input type="radio" name="estado" value="1" required="" id="vendido">Vendido
+								<input type="radio" name="estado" value="1" required="" id="vendido">Vendido <br>
+								<input type="radio" name="estado" value="2" required="" id="cambalache">Cambalache
 							</div>
 							<div class="form-group">
 								<label>Articulo</label>
@@ -182,11 +203,16 @@ $userdata= $this->session->userdata('user');
 						<form action="user/do_upload" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Articulo</label>
-								<input type="text" autofocus required class="form-control" placeholder="Ingrese el nombre del articulo" name="nombre">
+								<input type="text" autofocus required class="form-control" placeholder="Ingrese el nombre del articulo" name="nombre" maxlength="20">
 							</div>
 							<div class="form-group">
 								<label>Descripción</label><br>
-								<textarea rows="3" placeholder="Breve descripcion del artículo" required name="descripcion"></textarea>
+								<textarea rows="3" placeholder="Breve descripcion del artículo" maxlength="300" required name="descripcion"></textarea>
+							</div>
+							<div class="form-group">
+								<label>Estado de la publicación</label><br>
+								<input type="radio" name="estado" value="0" required="" id="venta">En venta <br>
+								<input type="radio" name="estado" value="2" required="" id="vendido">Cambalache
 							</div>
 							<div class="form-group">
 								<label>Agrega una foto</label>
@@ -194,7 +220,7 @@ $userdata= $this->session->userdata('user');
 							</div>
 							<div class="form-group">
 								<label>Precio en ₡</label>
-								<input name="precio" type="number" min="100" required step="100" placeholder="Precio negociable">
+								<input name="precio" type="number" min="100" max="100000000000" required step="100" placeholder="Precio negociable">
 							</div>
 							<div class="modal-footer">
 								<div class="btn-group btn-group-justified" role="group" aria-label="group button">
@@ -210,11 +236,12 @@ $userdata= $this->session->userdata('user');
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 		<!-- Cargar modal -->
 		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="<?php base_url(); ?>util/js/user/perfil.js" ></script>
+		<script type="text/javascript" src="<?php base_url(); ?>util/js/user/file.js" ></script>
 	</body>
 </html>

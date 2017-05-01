@@ -61,5 +61,7 @@ $route['eliminarComentario'] = 'user/eliminarComentario';
 $route['buscar'] = 'user/busquedaUsuario';
 $route['upload'] = 'user/do_upload';
 $route['eliminarHistorial'] = 'user/eliminarHistorial';
+$route['desear'] = 'user/guardarPublicacionDeseada';
+$route['mostrarDeseo'] = 'user/mostrarDeseo';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

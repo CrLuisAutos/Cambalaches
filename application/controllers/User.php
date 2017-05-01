@@ -127,6 +127,33 @@ class User extends CI_Controller {
 	{
 		$this->User_model->eliminarHistorial($this->input->post('id'));
 	}
+	//verifica que el deseo del usuario no se repita
+	public function verificarDeseo($id_publicacion,$id_usuario)
+	{
+		return $this->User_model->verificarDeseo($id_publicacion, $id_usuario);
+	}
+	//obtiene datos de una publicacion deseada
+	public function guardarPublicacionDeseada()
+	{
+		$id_usuario = $this->input->post('id_usuario');
+		$id_publicacion = $this->input->post('id_publicacion');
+		//se verifica que el deseo en la publicacion no exista.
+		$r= $this->verificarDeseo($id_publicacion, $id_usuario);
+		if($r==0){
+			$datos = array('id_usuario' => $id_usuario,'id_publicacion'=> $id_publicacion);
+			$this->User_model->guardarPublicacionDeseada($datos);
+		}
+
+	}
+	public function mostrarDeseo()
+	{
+		$r=$this->User_model->mostrarDeseo($this->input->post('id'));
+		if (sizeof($r)>0) {
+			$data['deseo']= $r;
+		  	$r= json_encode($data);
+		  	echo $r;
+		}
+	}
 	public function obtenerImagen($id)
 	{
 		$r= $this->User_model->obtenerImagen($id);
@@ -147,7 +174,7 @@ class User extends CI_Controller {
         }
         else{
     		$datos['success'] = $this->upload->data();
-    		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'), 'foto'=>$datos['success']['file_name'], 'id_usuario'=> $this->usuarioActual(), 'estado'=> '0');
+    		$publicacion = array('nombre' => $this-> input->post('nombre'), 'descripcion'=>$this-> input->post('descripcion'), 'precio'=>$this-> input->post('precio'), 'foto'=>$datos['success']['file_name'], 'id_usuario'=> $this->usuarioActual(), 'estado'=> $this-> input->post('estado'));
     		$this->publicar($publicacion);
 
         }

@@ -69,4 +69,22 @@ jQuery(document).ready(function($) {
 
     });
 
+    //guardar publicacion deseada
+    $(".btnDeseo").click(function(event) {
+        $.ajax({
+            type: 'POST',
+            url: base_url + "/Cambalaches/desear",
+            data: {
+                'id_publicacion': this.id,
+                'id_usuario': usuarioActual
+            },
+            success: function data() {
+                $(".btnDeseo").attr("disabled", true);
+                $(".btnDeseo").notify(
+                    "Guardada en 'Favoritos'", "success");
+
+            }
+        })
+    });
+
 });

@@ -65,6 +65,27 @@ class User_model extends CI_Model {
     $this->db->delete('comentario', array('id_publicacion' => $id)); 
     $this->db->delete('publicacion', array('id' => $id)); 
   }
+  //verifica que un deseo de un usuario no se repita
+  public function verificarDeseo($id_publicacion, $id_usuario)
+  {
+    $query= $this->db->get_where('deseo', array('id_publicacion' => $id_publicacion ,'id_usuario' => $id_usuario ));
+    return $query->num_rows();
+  }
+  public function guardarPublicacionDeseada($datos)
+  {
+    $this->db->insert('deseo', $datos);
+  }
+  public function mostrarDeseo($id_usuario)
+  {
+    $this->db->select('p.id id_publicacion,p.descripcion, p.estado, p.foto, p.nombre nombre_publicacion, p.precio, u.id id_usuario, u.nombre nombre_usuario, u.apellido, d.id');
+    $this->db->from('deseo d'); 
+    $this->db->join('publicacion p' , 'p.id = d.id_publicacion');
+    $this->db->join('users u' , 'u.id = p.id_usuario');
+    $this->db->where('d.id_usuario', $id_usuario);
+    $this->db->order_by('d.id','desc'); 
+    $query = $this->db->get(); 
+    return $query->result_array();
+  }
   //elimina todas las publicaciones de un usuario
   public function eliminarHistorial($id)
   {
